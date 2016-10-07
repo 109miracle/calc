@@ -1,19 +1,10 @@
 package cal;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
+import java.awt.Color;
 import java.awt.Font;
-import java.awt.Frame;
-import java.awt.GridLayout;
-import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -22,9 +13,15 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-public class BMI extends JFrame{
+import javax.swing.border.LineBorder;
 
-    private JLabel lblHeight;
+public class BMI extends JFrame implements ActionListener{
+
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private JLabel lblHeight;
     private JLabel lblWeight;
     private JLabel lblBMI;
     private JLabel lblResult;
@@ -32,6 +29,7 @@ public class BMI extends JFrame{
     private JLabel lblAdvice;
 
     private JButton btnRun;
+    private JButton back;
     private JPanel pnlMain;
     private JTextField txtHeight;
     private JTextField txtWeight;
@@ -40,37 +38,54 @@ public class BMI extends JFrame{
     private JTextField txtSex;
     private JTextArea txtAdvice;
     
-    DecimalFormat dformat = new DecimalFormat("#.00");/*ä¸¤ä½å°æ•°*/
+    Font font =new Font("Î¢ÈíÑÅºÚ",Font.BOLD,15);
+    DecimalFormat dformat = new DecimalFormat("#.00");/*Á½Î»Ğ¡Êı*/
     public BMI(){
-        lblHeight = new JLabel("èº«é«˜(ç±³/m)");
-        txtHeight = new JTextField(10);
-        lblWeight = new JLabel("ä½“é‡(åƒå…‹/kg)");
-        txtWeight = new JTextField(10);
-        lblResult = new JLabel("å‚è€ƒç»“æœ");
-        txtResult = new JTextField(10);
-        lblBMI = new JLabel("å¥åº·å€¼(BMI)");
-        txtBMI = new JTextField(10);
-        btnRun = new JButton("æµ‹è¯•");
-        lblSex = new JLabel("æ€§åˆ«");
-        txtSex = new JTextField(10);
+        lblHeight = new JLabel("Éí¸ß(Ã×/m)");
+        lblHeight.setFont(font);
+        txtHeight = new JTextField(15);
+        txtHeight.setFont(font);
+        lblWeight = new JLabel("ÌåÖØ(Ç§¿Ë/kg)");
+        lblWeight.setFont(font);
+        txtWeight = new JTextField(15);
+        txtWeight.setFont(font);
+        lblResult = new JLabel("²Î¿¼½á¹û");
+        lblResult.setFont(font);
+        txtResult = new JTextField(15);
+        txtResult.setFont(font);
+        lblBMI = new JLabel("½¡¿µÖµ(BMI)");
+        lblBMI.setFont(font);
+        txtBMI = new JTextField(15);
+        txtBMI.setFont(font);
+        btnRun = new JButton("²âÊÔ");
+        btnRun.setFont(font);
+        back = new JButton("·µ»Ø");
+        back.setFont(font);
+        lblSex = new JLabel("ĞÔ±ğ");
+        lblSex.setFont(font);
+        txtSex = new JTextField(15);
+        txtSex.setFont(font);
         txtAdvice = new JTextArea();
-        lblAdvice = new JLabel("æ¸©é¦¨è´´å£«");
+        txtAdvice.setFont(font);
+        lblAdvice = new JLabel("ÎÂÜ°ÌùÊ¿");
+        lblAdvice.setFont(font);
         
         pnlMain = new JPanel();
-        pnlMain.setLayout(null);/*æ¸…ç©ºå¸ƒå±€ç®¡ç†å™¨*/
-        lblHeight.setBounds(100, 50, 80, 25);
-        txtHeight.setBounds(200, 50, 100, 25);
-        lblWeight.setBounds(100, 80, 80, 25);
-        txtWeight.setBounds(200, 80, 100, 25);
-        lblSex.setBounds(100, 110, 80, 25);
-        txtSex.setBounds(200, 110, 100, 25);
-        btnRun.setBounds(150, 140, 80, 25);
-        lblBMI.setBounds(100, 200, 80, 25);
-        txtBMI.setBounds(200, 200, 100, 25);
-        lblResult.setBounds(100, 230, 80, 25);
-        txtResult.setBounds(200, 230, 100, 25);
-        lblAdvice.setBounds(100, 260, 80, 25);
-        txtAdvice.setBounds(200, 260, 100, 200);
+        pnlMain.setLayout(null);/*Çå¿Õ²¼¾Ö¹ÜÀíÆ÷*/
+        lblHeight.setBounds(100, 50, 100, 25);
+        txtHeight.setBounds(220, 50, 125, 25);
+        lblWeight.setBounds(100, 80, 100, 25);
+        txtWeight.setBounds(220, 80, 125, 25);
+        lblSex.setBounds(100, 110, 100, 25);
+        txtSex.setBounds(220, 110, 125, 25);
+        btnRun.setBounds(175, 150, 85, 25);
+        lblBMI.setBounds(100, 190, 100, 25);
+        txtBMI.setBounds(220, 190, 125, 25);
+        lblResult.setBounds(100, 220, 100, 25);
+        txtResult.setBounds(220, 220, 125, 25);
+        lblAdvice.setBounds(100, 250, 100, 25);
+        txtAdvice.setBounds(220, 250, 125, 170);
+        back.setBounds(175, 440, 85, 25);
 
 
         pnlMain.add(lblHeight);
@@ -86,111 +101,121 @@ public class BMI extends JFrame{
         pnlMain.add(txtSex);
         pnlMain.add(lblAdvice);
         pnlMain.add(txtAdvice);
-        txtAdvice.setSize(100,200);
+        pnlMain.add(back);
+        txtAdvice.setSize(125,170);
+        txtAdvice.setBorder(new LineBorder(Color.GRAY));
         txtAdvice.setEditable(false);
+        txtBMI.setBorder(new LineBorder(Color.GRAY));
         txtBMI.setEditable(false);
+        txtResult.setBorder(new LineBorder(Color.GRAY));
         txtResult.setEditable(false);
         txtAdvice.setLineWrap(true);
         txtAdvice.setWrapStyleWord(true);
         this.setContentPane(pnlMain);
-        setSize(350,500);
-        setTitle("å¥åº·è¯„ä¼°");
+        setSize(450,550);
+        setTitle("½¡¿µÆÀ¹À");
         setVisible(true);
         setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setLocationRelativeTo(null);/*è®¾ç½®çª—å£å‡ºç°åœ¨å±å¹•ä¸­å¤®*/
+        this.setLocationRelativeTo(null);/*ÉèÖÃ´°¿Ú³öÏÖÔÚÆÁÄ»ÖĞÑë*/
 
-        btnRun.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // TODO Auto-generated method stub
-            	txtAdvice.setText(null);
-                if( txtWeight.getText() == null){
-                    JOptionPane.showMessageDialog(null, "èº«é«˜ä¸ºç©ºï¼Œè¯·è¾“å…¥ä¸€ä¸ªæ­£å€¼èº«é«˜ï¼");
-                    return;
-                }
-                if( txtHeight.getText() == null){
-                    JOptionPane.showMessageDialog(null, "ä½“é‡ä¸ºç©ºï¼Œè¯·è¾“å…¥ä¸€ä¸ªæ­£å€¼ä½“é‡ï¼");
-                    return; 
-                }
-                double weight = Double.valueOf(txtWeight.getText());
-                if(weight <= 0 ){
-                    JOptionPane.showMessageDialog(null, "ä½“é‡ä¸º0ï¼Œè¯·è¾“å…¥ä¸€ä¸ªæ­£å€¼ä½“é‡ã€‚");
-                    return;
-                }
-                double height = Double.valueOf(txtHeight.getText());
-                if(height <= 0 ){
-                    JOptionPane.showMessageDialog(null, "èº«é«˜ä¸º0ï¼Œè¯·è¾“å…¥ä¸€ä¸ªæ­£å€¼èº«é«˜ã€‚");
-                    return;
-                }
-                double bmi = weight/height/height;
-                txtBMI.setText(dformat.format(bmi));
-                txtResult.setText(getResult(bmi));
-                txtAdvice.append(getAdvice(bmi));
-            }
-
-        });
+        btnRun.addActionListener(this);
+        back.addActionListener(this);
     }
+        
+    public void actionPerformed(ActionEvent e) {
+            	txtAdvice.setText(null);
+            	if(e.getSource() == btnRun){
+            		if( txtWeight.getText() == null){
+                    JOptionPane.showMessageDialog(null, "Éí¸ßÎª¿Õ£¬ÇëÊäÈëÒ»¸öÕıÖµÉí¸ß£¡");
+                    return;
+            		}
+            		if( txtHeight.getText() == null){
+            			JOptionPane.showMessageDialog(null, "ÌåÖØÎª¿Õ£¬ÇëÊäÈëÒ»¸öÕıÖµÌåÖØ£¡");
+            			return; 
+            		}
+            		double weight = Double.valueOf(txtWeight.getText());
+            		if(weight <= 0 ){
+            			JOptionPane.showMessageDialog(null, "ÌåÖØÎª0£¬ÇëÊäÈëÒ»¸öÕıÖµÌåÖØ¡£");
+            			return;
+            		}
+            		double height = Double.valueOf(txtHeight.getText());
+            		if(height <= 0 ){
+            			JOptionPane.showMessageDialog(null, "Éí¸ßÎª0£¬ÇëÊäÈëÒ»¸öÕıÖµÉí¸ß¡£");
+            			return;
+            		}
+            		double bmi = weight/height/height;
+            		txtBMI.setText(dformat.format(bmi));
+            		txtResult.setText(getResult(bmi));
+            		txtAdvice.append(getAdvice(bmi));
+            	}
+                
+                if (e.getSource() == back){
+              	   this.setVisible(false);
+             	   new Face1().setVisible(true);
+                }
+                }
+
     private String getResult(double bmi) {
         // TODO Auto-generated method stub
-    	if(txtSex.getText().equals("ç”·")){
+    	if(txtSex.getText().equals("ÄĞ")){
 	        if(bmi < 20){
-	            return "è¿‡è½»";
+	            return "¹ıÇá";
 	        }else if( bmi >= 20 && bmi < 25){
-	            return "é€‚ä¸­";
+	            return "ÊÊÖĞ";
 	        }else if( bmi >= 26 && bmi < 30){
-	            return "è¿‡é‡";
+	            return "¹ıÖØ";
 	        }else if( bmi >= 30 && bmi < 35){
-	        	return "è‚¥èƒ–";
+	        	return "·ÊÅÖ";
 	        }else 
-	        	return "éå¸¸è‚¥èƒ–";
+	        	return "·Ç³£·ÊÅÖ";
 	        }
-	    	else if(txtSex.getText().equals("å¥³"))
+	    	else if(txtSex.getText().equals("Å®"))
 	    	{
 		    	if(bmi < 19 ){
-		    		return "è¿‡è½»";
+		    		return "¹ıÇá";
 		    	}else if(bmi >= 19 && bmi < 24){
-		    		return "é€‚ä¸­";
+		    		return "ÊÊÖĞ";
 		        }else if( bmi >= 24 && bmi < 29){
-		            return "è¿‡é‡";
+		            return "¹ıÖØ";
 		        }else if( bmi >= 29 && bmi < 34){
-		        	return "è‚¥èƒ–";
+		        	return "·ÊÅÖ";
 		        }else 
-		        	return"éå¸¸è‚¥èƒ–";
+		        	return"·Ç³£·ÊÅÖ";
 		    		}
 	    	else return "an error exists";
 	    }
-    private String getAdvice(double bmi) {if(txtSex.getText().equals("ç”·")){
+    private String getAdvice(double bmi) {if(txtSex.getText().equals("ÄĞ")){
         if(bmi < 20){
-            return "ä¸€èˆ¬ä½“é‡è¿‡è½»çš„äººè‚ èƒƒæ¶ˆåŒ–åŠŸèƒ½æ¯”è¾ƒå¼±ï¼Œå¯ä»¥ä¸€é¡¿é¥­å°‘åƒä¸€äº›ï¼Œä¸ƒå…«åˆ†é¥±å°±å¯ä»¥ã€‚å¢åŠ è¿›é¤æ¬¡æ•°ï¼Œæ¯”å¦‚ä¸‹åˆèŒ¶æ—¶é—´å¯ä»¥å¤šåƒä¸€é¡¿ï¼Œå¤œå®µæœ€å¥½ä¸è¦ï¼Œå¯¹èº«ä½“ä¸å¥½ã€‚";
+            return "Ò»°ãÌåÖØ¹ıÇáµÄÈË³¦Î¸Ïû»¯¹¦ÄÜ±È½ÏÈõ£¬¿ÉÒÔÒ»¶Ù·¹³ÔÆß°Ë·Ö±¥,Ôö¼Ó½ø²Í´ÎÊı£¬Ò¹Ïü×îºÃ²»Òª£¬¶ÔÉíÌå²»ºÃ¡£";
         }else if( bmi >= 20 && bmi < 25){
-            return "ä¿æŒçƒ­é‡æ‘„å–ä¸æ”¯å‡ºçš„å¹³è¡¡ï¼Œé¿å…ä¸€äº›é«˜çƒ­é‡çš„é£Ÿç‰©ç»å¸¸è¿›é£Ÿé«˜çƒ­é‡çš„é£Ÿç‰©ä¼šå®¹æ˜“è‚¥èƒ–ï¼Œè‚¥èƒ–å¯èƒ½å¯¼è‡´ç³–å°¿ç—…ã€é«˜è¡€å‹ã€å† å¿ƒç—…ç”šè‡³æŸäº›ç™Œç—‡ã€‚";
+            return "±£³ÖÈÈÁ¿ÉãÈ¡ÓëÖ§³öµÄÆ½ºâ£¬±ÜÃâÒ»Ğ©¸ßÈÈÁ¿µÄÊ³Îï£¬¾­³£½øÊ³¸ßÈÈÁ¿µÄÊ³ÎïÈİÒ×·ÊÅÖ£¬¿ÉÄÜµ¼ÖÂÌÇÄò²¡¡¢¸ßÑªÑ¹¡¢ÉõÖÁÄ³Ğ©°©Ö¢¡£";
         }else if( bmi >= 26 && bmi < 30){
-            return "é¥®é£Ÿä¸Šåƒåˆ°ä¸ƒåˆ†é¥±ï¼Œé™åˆ¶æ€»çš„èƒ½é‡æ‘„å…¥ã€‚è€Œä¸”æ¯é¡¿é¥­æœ€å¥½æœ‰ä¸»é£Ÿï¼Œä¸€æ±¤ä¸‰èœï¼Œå¤–åŠ æ°´æœå’Œä¹³åˆ¶å“ã€‚å°‘åƒé«˜ç›ã€é«˜è„‚ã€é«˜èƒ½é‡é£Ÿç‰©ï¼Œæœ€æœ´ç´ çš„ã€æœ€å¤©ç„¶çš„æ‰æ˜¯æœ€å¥åº·çš„ã€‚";
+            return "ÏŞÖÆ×ÜµÄÄÜÁ¿ÉãÈë£¬Ã¿¶Ù·¹×îºÃÓĞÖ÷Ê³£¬Ò»ÌÀÈı²Ë£¬Íâ¼ÓË®¹ûºÍÈéÖÆÆ·¡£ÉÙ³Ô¸ßÑÎ¡¢¸ßÖ¬¡¢¸ßÄÜÁ¿Ê³Îï£¬×îÌìÈ»µÄ²ÅÊÇ×î½¡¿µµÄ¡£";
         }else if( bmi >= 30 && bmi < 35){
-        	return "å¤šå–æ°´èƒ½å¸®åŠ©ä½ æ’é™¤ä½“å†…çš„å¤šä½™æ¯’ç´ å’Œå¢åŠ ä½ çš„é¥±è…¹æ„Ÿï¼Œæ˜¯å‡è‚¥ç˜¦èº«çš„ä½³å“ã€‚æƒ³è¦å‡è‚¥çš„ä½ ï¼Œè¦è®°å¾—æ¯å¤©è‡³å°‘å–3000ccçš„æ°´å“¦ï¼";
+        	return "¶àºÈË®ÄÜ°ïÖúÄãÅÅ³ıÌåÄÚ¶àÓà¶¾ËØ£¬Ôö¼Ó±¥¸¹¸Ğ£¬ÊÇ¼õ·ÊÊİÉíµÄ¼ÑÆ·¡£ÏëÒª¼õ·ÊµÄÄã£¬Òª¼ÇµÃÃ¿ÌìÖÁÉÙºÈ3000ccµÄË®Å¶£¡";
         }else 
-        	return "å»ºè®®å‡è‚¥åœ¨åŒ»ç”Ÿçš„æŒ‡å¯¼ä¸‹è¿›è¡Œï¼Œæ ¹æ®åŒ»ç”Ÿçš„å®‰æ’è¿›è¡Œç»Ÿä¸€çš„é¥®é£Ÿè°ƒç†å’Œæ§åˆ¶ï¼Œé€‚å½“çš„æ—¶å€™å¯è¿›è¡Œè¯ç‰©çš„æ§åˆ¶ã€‚";
+        	return "½¨Òé¼õ·ÊÔÚÒ½ÉúµÄÖ¸µ¼ÏÂ½øĞĞ£¬¸ù¾İÒ½ÉúµÄ°²ÅÅ½øĞĞÍ³Ò»µÄÒûÊ³µ÷ÀíºÍ¿ØÖÆ£¬ÊÊµ±µÄÊ±ºò¿É½øĞĞÒ©ÎïµÄ¿ØÖÆ¡£";
         }
-    	else if(txtSex.getText().equals("å¥³"))
+    	else if(txtSex.getText().equals("Å®"))
     	{
 	    	if(bmi < 19 ){
-	    		return "ä¸€èˆ¬ä½“é‡è¿‡è½»çš„äººè‚ èƒƒæ¶ˆåŒ–åŠŸèƒ½æ¯”è¾ƒå¼±ï¼Œå¯ä»¥ä¸€é¡¿é¥­å°‘åƒä¸€äº›ï¼Œä¸ƒå…«åˆ†é¥±å°±å¯ä»¥ã€‚å¢åŠ è¿›é¤æ¬¡æ•°ï¼Œæ¯”å¦‚ä¸‹åˆèŒ¶æ—¶é—´å¯ä»¥å¤šåƒä¸€é¡¿ï¼Œå¤œå®µæœ€å¥½ä¸è¦ï¼Œå¯¹èº«ä½“ä¸å¥½ã€‚";
+	    		return "Ò»°ãÌåÖØ¹ıÇáµÄÈË³¦Î¸Ïû»¯¹¦ÄÜ±È½ÏÈõ£¬¿ÉÒÔÒ»¶Ù·¹³ÔÆß°Ë·Ö±¥,Ôö¼Ó½ø²Í´ÎÊı£¬Ò¹Ïü×îºÃ²»Òª£¬¶ÔÉíÌå²»ºÃ¡£";
 	    	}else if(bmi >= 19 && bmi < 24){
-	    		return "ä¿æŒçƒ­é‡æ‘„å–ä¸æ”¯å‡ºçš„å¹³è¡¡ï¼Œé¿å…ä¸€äº›é«˜çƒ­é‡çš„é£Ÿç‰©ç»å¸¸è¿›é£Ÿé«˜çƒ­é‡çš„é£Ÿç‰©ä¼šå®¹æ˜“è‚¥èƒ–ï¼Œè‚¥èƒ–å¯èƒ½å¯¼è‡´ç³–å°¿ç—…ã€é«˜è¡€å‹ã€å† å¿ƒç—…ç”šè‡³æŸäº›ç™Œç—‡ã€‚";
+	    		return "±£³ÖÈÈÁ¿ÉãÈ¡ÓëÖ§³öµÄÆ½ºâ£¬±ÜÃâÒ»Ğ©¸ßÈÈÁ¿µÄÊ³Îï£¬¾­³£½øÊ³¸ßÈÈÁ¿µÄÊ³ÎïÈİÒ×·ÊÅÖ£¬·ÊÅÖ¿ÉÄÜµ¼ÖÂÌÇÄò²¡¡¢¸ßÑªÑ¹¡¢¹ÚĞÄ²¡ÉõÖÁÄ³Ğ©°©Ö¢¡£";
 	        }else if( bmi >= 24 && bmi < 29){
-	            return "é¥®é£Ÿä¸Šåƒåˆ°ä¸ƒåˆ†é¥±ï¼Œé™åˆ¶æ€»çš„èƒ½é‡æ‘„å…¥ã€‚è€Œä¸”æ¯é¡¿é¥­æœ€å¥½æœ‰ä¸»é£Ÿï¼Œä¸€æ±¤ä¸‰èœï¼Œå¤–åŠ æ°´æœå’Œä¹³åˆ¶å“ã€‚å°‘åƒé«˜ç›ã€é«˜è„‚ã€é«˜èƒ½é‡é£Ÿç‰©ï¼Œæœ€æœ´ç´ çš„ã€æœ€å¤©ç„¶çš„æ‰æ˜¯æœ€å¥åº·çš„ã€‚";
+	            return "ÏŞÖÆ×ÜµÄÄÜÁ¿ÉãÈë£¬Ã¿¶Ù·¹×îºÃÓĞÖ÷Ê³£¬Ò»ÌÀÈı²Ë£¬Íâ¼ÓË®¹ûºÍÈéÖÆÆ·¡£ÉÙ³Ô¸ßÑÎ¡¢¸ßÖ¬¡¢¸ßÄÜÁ¿Ê³Îï£¬×îÆÓËØµÄ¡¢×îÌìÈ»µÄ²ÅÊÇ×î½¡¿µµÄ¡£";
 	        }else if( bmi >= 29 && bmi < 34){
-	        	return "å¤šå–æ°´èƒ½å¸®åŠ©ä½ æ’é™¤ä½“å†…çš„å¤šä½™æ¯’ç´ å’Œå¢åŠ ä½ çš„é¥±è…¹æ„Ÿï¼Œæ˜¯å‡è‚¥ç˜¦èº«çš„ä½³å“ã€‚æƒ³è¦å‡è‚¥çš„ä½ ï¼Œè¦è®°å¾—æ¯å¤©è‡³å°‘å–3000ccçš„æ°´å“¦ï¼";
+	        	return "¶àºÈË®ÄÜ°ïÖúÄãÅÅ³ıÌåÄÚ¶àÓà¶¾ËØ£¬Ôö¼Ó±¥¸¹¸Ğ£¬ÊÇ¼õ·ÊÊİÉíµÄ¼ÑÆ·¡£ÏëÒª¼õ·ÊµÄÄã£¬Òª¼ÇµÃÃ¿ÌìÖÁÉÙºÈ3000ccµÄË®Å¶£¡";
 	        }else 
-	        	return"å»ºè®®å‡è‚¥åœ¨åŒ»ç”Ÿçš„æŒ‡å¯¼ä¸‹è¿›è¡Œï¼Œæ ¹æ®åŒ»ç”Ÿçš„å®‰æ’è¿›è¡Œç»Ÿä¸€çš„é¥®é£Ÿè°ƒç†å’Œæ§åˆ¶ï¼Œé€‚å½“çš„æ—¶å€™å¯è¿›è¡Œè¯ç‰©çš„æ§åˆ¶ã€‚";
+	        	return"½¨Òé¼õ·ÊÔÚÒ½ÉúµÄÖ¸µ¼ÏÂ½øĞĞ£¬¸ù¾İÒ½ÉúµÄ°²ÅÅ½øĞĞÍ³Ò»µÄÒûÊ³µ÷ÀíºÍ¿ØÖÆ£¬ÊÊµ±µÄÊ±ºò¿É½øĞĞÒ©ÎïµÄ¿ØÖÆ¡£";
 	    		}
     	else return "an error exists";
     }
 
     public static void main(String[] args) {
-        new BMI();
-    }
+        BMI bmi = new BMI();
+        bmi.setLocationRelativeTo(null);
+    } 
    
 }

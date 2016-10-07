@@ -1,6 +1,7 @@
 package cal;
 
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Label;
 import java.awt.event.ActionEvent;
@@ -15,13 +16,18 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class ExRate extends JFrame implements ActionListener{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	double x1,x2,y1,y2,z1,z2,z;
 	String s,s1,s2,l,l1,l2;
 	Label label,label1,label2,label3,label4,label5;
 	JPanel p1,p2,p3;
 	JTextField text1,text2,text3,text4,text5;
-	JButton bcal,bclean;
+	JButton bcal,bclean,back;
 	JButton[] b=new JButton[10];
+	Font font =new Font("微软雅黑",Font.BOLD,15);
 	
 	public ExRate(){
 		super("Exchange Rate");
@@ -31,16 +37,21 @@ public class ExRate extends JFrame implements ActionListener{
 		setLayout(new FlowLayout());
 		p1.setLayout(new GridLayout(5,1,3,3));//文本框面板
 		p2.setLayout(new GridLayout(5,1,3,3));//数字面板
-		p3.setLayout(new GridLayout(2,1,3,3));
+		p3.setLayout(new GridLayout(3,1,3,3));
 		label = new Label("Exchange Rate");
+		label.setFont(font);
 		add(label);
-		this.setVisible(true);
 		
-        label1 = new Label("人民币");
-        label2 = new Label("美元");
+        label1 = new Label("人民币金额");
+        label1.setFont(font);
+        label2 = new Label("美元金额");
+        label2.setFont(font);
         label3 = new Label("当前美元汇率");
-        label4 = new Label("英镑");
+        label3.setFont(font);
+        label4 = new Label("英镑金额");
+        label4.setFont(font);
         label5 = new Label("当前英镑汇率");
+        label5.setFont(font);
         
 		p1.add(label1);
 		p1.add(label2);
@@ -49,10 +60,15 @@ public class ExRate extends JFrame implements ActionListener{
 		p1.add(label5);
 		
 		text1 = new JTextField(15);
+		text1.setFont(font);
 		text2 = new JTextField(15);
+		text2.setFont(font);
 		text3 = new JTextField(15);
+		text3.setFont(font);
 		text4 = new JTextField(15);
+		text4.setFont(font);
 		text5 = new JTextField(15);
+		text5.setFont(font);
 		p2.add(text1);
 		p2.add(text2);
 		p2.add(text3);
@@ -60,37 +76,49 @@ public class ExRate extends JFrame implements ActionListener{
 		p2.add(text5);
 			
 	    bcal = new JButton("开始计算");
+	    bcal.setFont(font);
 	    bclean = new JButton("结果重置");
+	    bclean.setFont(font);
+	    back = new JButton("返回");
+	    back.setFont(font);
 	    p3.add(bcal);
 		p3.add(bclean);
+		p3.add(back);
 		bcal.addActionListener(this);
 		bclean.addActionListener(this);
+		back.addActionListener(this);
 		
 		add(p1);
 		add(p2);
 		add(p3);
-		add(new Label(""));	
 		
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        pack();
+		setLocationRelativeTo(null);
+		this.setVisible(true);
 		}
 	
 	public void actionPerformed(ActionEvent e) {
-		/*汇率转换*/
-		s1 = text1.getText();
-		s = httpGet("http://hq.sinajs.cn/?list=fx_susdcny");
-		s = s.substring(32,38);
-		x1 = Double.valueOf(s1);
-		z1 = Double.valueOf(s);
-		
-		l1 = text1.getText();
-		l = httpGet("http://hq.sinajs.cn/list=GBP");
-		l = l.substring(25,31);
-		x2 = Double.valueOf(l1);
-		z2 = Double.valueOf(l);
-		z = z1*z2;
-		
+		/*汇率转换*/		
 		if(e.getSource()==bcal){
+			s1 = text1.getText();
+			s = httpGet("http://hq.sinajs.cn/?list=fx_susdcny");
+			s = s.substring(32);
+			String a[] = s.split("\\,");
+			s = a[0];
+			x1 = Double.valueOf(s1);
+			z1 = Double.valueOf(s);
+			
+			l1 = text1.getText();
+			l = httpGet("http://hq.sinajs.cn/list=GBP");
+			l = l.substring(25);
+			String b[] = l.split("\\,");
+			l = b[0];
+			x2 = Double.valueOf(l1);
+			z2 = Double.valueOf(l);
+			z = z1*z2;
 			y1 = x1/z1;
-			y2 = x1/(z1*z2);
+			y2 = x1/z;
 			s2 = String.valueOf(y1);
 			text2.setText(s2);
 			text3.setText(s);
@@ -112,8 +140,11 @@ public class ExRate extends JFrame implements ActionListener{
             z1 = 0; z2 = 0;
             
         }
+		if(e.getSource()==back){
+			this.dispose();
+        	new Face2().setVisible(true);
         }
-
+	}
 
 	public static String httpGet(String url)
     {
@@ -160,11 +191,9 @@ public class ExRate extends JFrame implements ActionListener{
         return result;
     }
 	public static void main(String[] args){
-		ExRate er=new ExRate();//
-        er.setVisible(true);
-        er.pack();
-        er.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	
+		new ExRate();//
+ 
+        
 		}
 	
 

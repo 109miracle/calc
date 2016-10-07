@@ -1,16 +1,13 @@
 package cal;
  
-import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.net.URL;
 import java.text.DecimalFormat;
-import java.awt.Toolkit;
- 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -18,12 +15,10 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
  
 @SuppressWarnings("serial")
-public class bodyexam extends JPanel {
+public class bodyexam extends JFrame implements ActionListener{
 	DecimalFormat dformat = new DecimalFormat("#.00");
 	private JLabel BMIlb;
     private JLabel lunglb;
@@ -34,9 +29,7 @@ public class bodyexam extends JPanel {
     private JLabel jumplb;
     private JLabel resultlb;
 
-    private JButton btnRun;
-    private JPanel mainPnl;
-    
+    private JButton btnRun,back;
     private JTextField BMItxt;
     private JTextField lungtxt;
     private JTextField shortRuntxt;
@@ -45,101 +38,120 @@ public class bodyexam extends JPanel {
     private JTextField longRuntxt;
     private JTextField jumptxt;
     private JTextField resulttxt;
-
+    private JPanel panel1,panel2,panel3,panel4,panel5,panel6,panel7,mainPnl;
+    private JTabbedPane tp;
+    Font font =new Font("Î¢ÈíÑÅºÚ",Font.BOLD,15);
  
-    public TabbedPaneDemo()
+    public bodyexam()
     { 
-       //è®¾ç½®å¸ƒå±€ç®¡ç†å™¨ï¼Œé»˜è®¤çš„å¸ƒå±€ç®¡ç†å™¨æ˜¯ BorderLayout,è¿™é‡Œæ²¡é‚£ä¹ˆå¤æ‚
-       //é€‰æ‹©GridLayout(1,1)å³å¯ï¼Œå°±æ˜¯æ•´ä¸ªä¸ºä¸€å—     
-       super(new GridLayout(1,1));
+    	setTitle("Ìå²â³É¼¨¼ÆËã");
       
-       //åˆ›å»ºJTabbedPane
-       JTabbedPane tp = new JTabbedPane(JTabbedPane.TOP);
-       int width = 450;
+       //´´½¨JTabbedPane
+       tp = new JTabbedPane(JTabbedPane.TOP);
+       int width = 480;
        int height = 700;
       
-       //åˆ›å»ºç¬¬ä¸€ä¸ªæ ‡ç­¾ä¸‹çš„label
-       //æŒ‡å®šæ ‡ç­¾åï¼Œæ ‡ç­¾å›¾æ ‡ï¼Œpanelï¼Œå’Œæç¤ºä¿¡æ¯
-       JPanel panel1 = createPanel("panel1");
-       ImageIcon i1= createImageIcon("/Users/cailingyu/Documents/first test/src/cal/BMI.jpg"); 
+       //´´½¨µÚÒ»¸ö±êÇ©ÏÂµÄlabel
+       //Ö¸¶¨±êÇ©Ãû£¬±êÇ©Í¼±ê£¬panel£¬ºÍÌáÊ¾ĞÅÏ¢
+       panel1 = createPanel("panel1");
+       ImageIcon i1= createImageIcon("E:\\eclipse\\workplace\\cal\\src\\BMI.jpg"); 
        i1.setImage(i1.getImage().getScaledInstance(width,height,Image.SCALE_DEFAULT));
        JLabel label1 = new JLabel(i1);
        panel1.add(label1);
        tp.addTab("BMI",panel1);
-       //è®¾ç½®æ ‡ç­¾çš„å¿«æ·é”®
+       //ÉèÖÃ±êÇ©µÄ¿ì½İ¼ü
        tp.setMnemonicAt(0, KeyEvent.VK_1); 
        
-       //ç¬¬äºŒä¸ªæ ‡ç­¾
-       JPanel panel3 = createPanel("panel3");
-       ImageIcon i3= createImageIcon("/Users/cailingyu/Documents/first test/src/cal/Lung.jpg"); 
+       //µÚ¶ş¸ö±êÇ©
+       panel3 = createPanel("panel3");
+       ImageIcon i3= createImageIcon("E:\\eclipse\\workplace\\cal\\src\\Lung.jpg"); 
        i3.setImage(i3.getImage().getScaledInstance(width,height,Image.SCALE_DEFAULT));
        JLabel label3 = new JLabel(i3);
        panel3.add(label3);
        tp.addTab("Lung",panel3);
        tp.setMnemonicAt(0, KeyEvent.VK_3);
        
-       //ç¬¬ä¸‰ä¸ªæ ‡ç­¾
-       JPanel panel2 = createPanel("panel2");
-       ImageIcon i2= createImageIcon("/Users/cailingyu/Documents/first test/src/cal/shortRun.jpg"); 
+       //µÚÈı¸ö±êÇ©
+       panel2 = createPanel("panel2");
+       ImageIcon i2= createImageIcon("E:\\eclipse\\workplace\\cal\\src\\shortRun.jpg"); 
        i2.setImage(i2.getImage().getScaledInstance(width,height,Image.SCALE_DEFAULT));
        JLabel label2 = new JLabel(i2);
        panel2.add(label2);
        tp.addTab("shortRun",panel2);
        tp.setMnemonicAt(0, KeyEvent.VK_2);
  
-       JPanel panel7 = createPanel("panel7");
-       ImageIcon i7= createImageIcon("/Users/cailingyu/Documents/first test/src/cal/crook.jpg"); 
+       panel7 = createPanel("panel7");
+       ImageIcon i7= createImageIcon("E:\\eclipse\\workplace\\cal\\src\\crook.jpg"); 
        i7.setImage(i7.getImage().getScaledInstance(width,height,Image.SCALE_DEFAULT));
        JLabel label7 = new JLabel(i7);
        panel7.add(label7);
        tp.addTab("crook",panel7);
        tp.setMnemonicAt(0, KeyEvent.VK_7);
        
-       JPanel panel6 = createPanel("panel6");
-       ImageIcon i6= createImageIcon("/Users/cailingyu/Documents/first test/src/cal/Jump.jpg"); 
+       panel6 = createPanel("panel6");
+       ImageIcon i6= createImageIcon("E:\\eclipse\\workplace\\cal\\src\\Jump.jpg"); 
        i6.setImage(i6.getImage().getScaledInstance(width,height,Image.SCALE_DEFAULT));
        JLabel label6 = new JLabel(i6);
        panel6.add(label6);
        tp.addTab("Jump",panel6);
        tp.setMnemonicAt(0, KeyEvent.VK_6);
        
-       JPanel panel5 = createPanel("panel5");
-       ImageIcon i5= createImageIcon("/Users/cailingyu/Documents/first test/src/cal/Situp.jpg"); 
+       panel5 = createPanel("panel5");
+       ImageIcon i5= createImageIcon("E:\\eclipse\\workplace\\cal\\src\\Situp.jpg"); 
        i5.setImage(i5.getImage().getScaledInstance(width,height,Image.SCALE_DEFAULT));
        JLabel label5 = new JLabel(i5);
        panel5.add(label5);
        tp.addTab("Situp",panel5);
        tp.setMnemonicAt(0, KeyEvent.VK_5);
        
-       JPanel panel4 = createPanel("panel4");
-       ImageIcon i4= createImageIcon("/Users/cailingyu/Documents/first test/src/cal/longRun.jpg"); 
+       panel4 = createPanel("panel4");
+       ImageIcon i4= createImageIcon("E:\\eclipse\\workplace\\cal\\src\\longRun.jpg"); 
        i4.setImage(i4.getImage().getScaledInstance(width,height,Image.SCALE_DEFAULT));
        JLabel label4 = new JLabel(i4);
        panel4.add(label4);
        tp.addTab("longRun",panel4);
        tp.setMnemonicAt(0, KeyEvent.VK_4);
        
-       JPanel mainPnl = createPanel("mainPnl");
-       BMIlb = new JLabel("ä½“é‡æŒ‡æ•°(BMI)");
-       lunglb = new JLabel("è‚ºæ´»é‡");
-       shortRunlb = new JLabel("50ç±³è·‘");
-       crooklb = new JLabel("åä½ä½“å‰å±ˆ");
-       jumplb = new JLabel("ç«‹å®šè·³è¿œ");
-       situplb = new JLabel("å¼•ä½“å‘ä¸Š(ç”·)/1åˆ†é’Ÿä»°å§èµ·å(å¥³)");
-       longRunlb = new JLabel("1000ç±³è·‘(ç”·)/800ç±³è·‘(å¥³)");
-       resultlb = new JLabel("ç»“æœ");
+       mainPnl = createPanel("mainPnl");
+       BMIlb = new JLabel("ÌåÖØÖ¸Êı(BMI)");
+       BMIlb.setFont(font);
+       lunglb = new JLabel("·Î»îÁ¿");
+       lunglb.setFont(font);
+       shortRunlb = new JLabel("50Ã×ÅÜ");
+       shortRunlb.setFont(font);
+       crooklb = new JLabel("×øÎ»ÌåÇ°Çü");
+       crooklb.setFont(font);
+       jumplb = new JLabel("Á¢¶¨ÌøÔ¶");
+       jumplb.setFont(font);
+       situplb = new JLabel("ÒıÌåÏòÉÏ(ÄĞ)/ÑöÎÔÆğ×ø(Å®)");
+       situplb.setFont(font);
+       longRunlb = new JLabel("1000Ã×ÅÜ(ÄĞ)/800Ã×ÅÜ(Å®)");
+       longRunlb.setFont(font);
+       resultlb = new JLabel("½á¹û");
+       resultlb.setFont(font);
        
        
        BMItxt = new JTextField(10);
+       BMItxt.setFont(font);
        lungtxt = new JTextField(10);
+       lungtxt.setFont(font);
        shortRuntxt = new JTextField(10);
+       shortRuntxt.setFont(font);
        crooktxt = new JTextField(10);
+       crooktxt.setFont(font);
        jumptxt = new JTextField(10);
+       jumptxt.setFont(font);
        situptxt = new JTextField(10);
+       situptxt.setFont(font);
        longRuntxt = new JTextField(10);
+       longRuntxt.setFont(font);
        resulttxt = new JTextField(10);
+       resulttxt.setFont(font);
        
-       btnRun = new JButton("ç¡®è®¤");
+       btnRun = new JButton("È·ÈÏ");
+       btnRun.setFont(font);
+       back = new JButton("·µ»Ø");
+       back.setFont(font);
        mainPnl.setLayout(null);
        BMIlb.setBounds(100, 50, 150, 25);
        BMItxt.setBounds(300, 50, 100, 25);
@@ -155,9 +167,10 @@ public class bodyexam extends JPanel {
        situptxt.setBounds(300, 200, 100, 25);
        longRunlb.setBounds(100, 230, 150, 25);
        longRuntxt.setBounds(300, 230, 100, 25);
-       btnRun.setBounds(200, 260, 80, 25);
-       resultlb.setBounds(100, 290, 150, 25);
-       resulttxt.setBounds(300, 290, 100, 25);
+       btnRun.setBounds(200, 280, 80, 25);
+       resultlb.setBounds(100, 330, 150, 25);
+       resulttxt.setBounds(300, 330, 100, 25);
+       back.setBounds(200, 380, 80, 25);
        
        mainPnl.add(BMIlb);
        mainPnl.add(BMItxt);
@@ -176,65 +189,72 @@ public class bodyexam extends JPanel {
        mainPnl.add(btnRun);
        mainPnl.add(resultlb);
        mainPnl.add(resulttxt);
+       mainPnl.add(back);
        
        resulttxt.setEditable(false);
-       tp.addTab("ä½“æµ‹è®¡ç®—",mainPnl);
+       tp.addTab("Ìå²â¼ÆËã",mainPnl);
        tp.setMnemonicAt(0, KeyEvent.VK_6);
        
-       btnRun.addActionListener(new ActionListener() {
-
-           @Override
-           public void actionPerformed(ActionEvent e) {
-               // TODO Auto-generated method stub
-               if( BMItxt.getText() == null||lungtxt.getText() == null||shortRuntxt.getText() == null||
-            		   crooktxt.getText() == null||jumptxt.getText() == null||situptxt.getText() == null
-            		   ||longRuntxt.getText() == null){
-                   JOptionPane.showMessageDialog(null, "è¯·å¡«å†™æ‰€æœ‰çš„æˆç»©ï¼Œä¸èƒ½ä¸ºç©º");
-                   return;
-               }
-               double bmi = Double.valueOf(BMItxt.getText());
-               double lung = Double.valueOf(lungtxt.getText());
-               double shortRun = Double.valueOf(shortRuntxt.getText());
-               double crook = Double.valueOf(crooktxt.getText());
-               double jump = Double.valueOf(jumptxt.getText());
-               double situp = Double.valueOf(situptxt.getText());
-               double longRun = Double.valueOf(longRuntxt.getText());
-               
-               double grade = 0.15*bmi + 0.15*lung + 0.2*shortRun + 0.1*crook 
-            		   + 0.1*jump + 0.1*situp + 0.2*longRun;
-               resulttxt.setText(dformat.format(grade));
-           }
-
-       });
        
-       
-       
+       btnRun.addActionListener(this);
+       back.addActionListener(this);
 
-       
-
-       //è®¾ç½®åˆé€‚çš„æ˜¾ç¤ºå°ºå¯¸ï¼Œè¿™ä¸ªæ˜¯å¿…é¡»çš„ï¼Œå› ä¸ºå¦‚æœæ‰€æœ‰çš„æ ‡ç­¾éƒ½
-       //ä¸æŒ‡å®šé€‚åˆçš„æ˜¾ç¤ºå°ºå¯¸ï¼Œç³»ç»Ÿæ— æ³•åˆ¤æ–­åˆå§‹æ˜¾ç¤ºå°ºå¯¸å¤§å°
-       //é»˜è®¤æ˜¯ä½¿ç”¨æœ€å°åŒ–ï¼Œå¹¶ä¸”å¯¹ä¸€ä¸ªæ ‡ç­¾è®¾è®¡å³å¯
+       //ÉèÖÃºÏÊÊµÄÏÔÊ¾³ß´ç£¬Õâ¸öÊÇ±ØĞëµÄ£¬ÒòÎªÈç¹ûËùÓĞµÄ±êÇ©¶¼
+       //²»Ö¸¶¨ÊÊºÏµÄÏÔÊ¾³ß´ç£¬ÏµÍ³ÎŞ·¨ÅĞ¶Ï³õÊ¼ÏÔÊ¾³ß´ç´óĞ¡
+       //Ä¬ÈÏÊÇÊ¹ÓÃ×îĞ¡»¯£¬²¢ÇÒ¶ÔÒ»¸ö±êÇ©Éè¼Æ¼´¿É
        tp.setPreferredSize(new Dimension(width,height));
        
  
-       //å°†tabbedPanelæ·»åŠ åˆ°Jpanelä¸­
+       //½«tabbedPanelÌí¼Óµ½JpanelÖĞ
        add(tp);
       
-       //è®¾ç½®çª—å£è¿‡å°æ—¶ï¼Œæ ‡ç­¾çš„æ˜¾ç¤ºç­–ç•¥
+       //ÉèÖÃ´°¿Ú¹ıĞ¡Ê±£¬±êÇ©µÄÏÔÊ¾²ßÂÔ
        tp.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
-       //è®¾ç½®æ ‡ç­¾åœæ”¾çš„ä½ç½®ï¼Œè¿™é‡Œè®¾ç½®ä¸ºå·¦ä¾§åœæ”¾
-      
+       //ÉèÖÃ±êÇ©Í£·ÅµÄÎ»ÖÃ£¬ÕâÀïÉèÖÃÎª×ó²àÍ£·Å
+       setLocation(700, 150);
+       setVisible(true);
+       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+       pack();
     }
+    
+    public void actionPerformed(ActionEvent e) {
+               // TODO Auto-generated method stub
+    	if(e.getSource() == back){
+      	   new Face1().setVisible(true);
+             this.setVisible(false);
+         }
+    	if(e.getSource() == btnRun){
+    	if( BMItxt.getText() == null||lungtxt.getText() == null||shortRuntxt.getText() == null||
+    			crooktxt.getText() == null||jumptxt.getText() == null||situptxt.getText() == null
+    			||longRuntxt.getText() == null){
+    		JOptionPane.showMessageDialog(null, "ÇëÌîĞ´ËùÓĞµÄ³É¼¨£¬²»ÄÜÎª¿Õ");
+    		return;
+    	}
+    	double bmi = Double.valueOf(BMItxt.getText());
+    	double lung = Double.valueOf(lungtxt.getText());
+    	double shortRun = Double.valueOf(shortRuntxt.getText());
+    	double crook = Double.valueOf(crooktxt.getText());
+    	double jump = Double.valueOf(jumptxt.getText());
+    	double situp = Double.valueOf(situptxt.getText());
+    	double longRun = Double.valueOf(longRuntxt.getText());
+               
+    	double grade = 0.15*bmi + 0.15*lung + 0.2*shortRun + 0.1*crook 
+    			+ 0.1*jump + 0.1*situp + 0.2*longRun;
+    	resulttxt.setText(dformat.format(grade));
+    	}
+    	  
+    }
+
+
    
    
    
     private JPanel createPanel(String string) {
-       //åˆ›å»ºä¸€ä¸ªJPanelï¼Œå¹¶ä¸ºæ„é€ å‡½æ•°åˆå§‹false
-       //è¡¨ç¤ºä¸é€‚ç”¨åŒç¼“å†²
+       //´´½¨Ò»¸öJPanel£¬²¢Îª¹¹Ôìº¯Êı³õÊ¼false
+       //±íÊ¾²»ÊÊÓÃË«»º³å
        JPanel panel = new JPanel(false);
       
-       //è®¾ç½®å¸ƒå±€
+       //ÉèÖÃ²¼¾Ö
        panel.setLayout(new GridLayout(1,1));
        return panel;
     }
@@ -250,29 +270,8 @@ public class bodyexam extends JPanel {
        return new ImageIcon(url);
     }
  
- 
- 
-    public static void createAndShowGUI()
-    {
-       JFrame frame = new JFrame("table panel test");
-       frame.setLocationRelativeTo(null);/*è®¾ç½®çª—å£å‡ºç°åœ¨å±å¹•ä¸­å¤®*/
-       frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-      
-       frame.add(new TabbedPaneDemo());
-      
-       frame.pack();
-       frame.setVisible(true);
-      
-      
-    }
    
     public static void main(String[] args) {
-       SwingUtilities.invokeLater(new Runnable() {
-          
-           @Override
-           public void run() {
-              createAndShowGUI();
-           }
-       });
+       new bodyexam();
     }
 }
